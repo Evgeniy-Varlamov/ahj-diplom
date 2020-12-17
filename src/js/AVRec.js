@@ -59,16 +59,14 @@ export default class AVRec {
         audio: true,
         video: (type === 'video'),
       });
-      if (type === 'video') {
-        if (typeof document !== 'undefined') {
-          const miniVideo = document.createElement('video');
-          miniVideo.controls = true;
-          miniVideo.muted = 'muted';
-          miniVideo.className = 'mini-video';
-          document.body.appendChild(miniVideo);
-          miniVideo.srcObject = stream;
-          miniVideo.play();
-        }
+      if ((type === 'video') && (document)) {
+        const miniVideo = document.createElement('video');
+        miniVideo.controls = true;
+        miniVideo.muted = 'muted';
+        miniVideo.className = 'mini-video';
+        document.body.appendChild(miniVideo);
+        miniVideo.srcObject = stream;
+        miniVideo.play();
       }
       this.recorder = new MediaRecorder(stream);
       this.recorder.addEventListener('start', () => {

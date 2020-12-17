@@ -1,12 +1,12 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-use-before-define */
 class Popup {
-  constructor() {
+  constructor(container) {
     this.type = '';
     this.result = false;
     this.callback = () => {};
     this.init();
-    this.container = document.getElementsByClassName('container')[0];
+    this.container = container;
   }
 
   init() {
@@ -57,5 +57,7 @@ class Popup {
   }
 }
 
-const popup = new Popup();
+const container = document.querySelector('.container');
+
+const popup = new Popup(container);
 export default popup;

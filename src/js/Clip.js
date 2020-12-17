@@ -50,12 +50,12 @@ export default class Clip {
   async validFile() {
     if ((this.typeFile) && (this.file.size < this.maxSize)) { // Проверка на соответсвие типа файла и размера
       this.createMsg(this.file, this.typeFile);
-    } else {
-      this.file = null;
-      const title = 'Что-то пошло не так';
-      const msgErr = 'Резрешается загружать файлы формата аудио видео и картинки \n Максимальный объем загружаемого файла 700 MB (734003200 Byte)';
-      popup.showPopup('err', title, msgErr);
+      return;
     }
+    this.file = null;
+    const title = 'Что-то пошло не так';
+    const msgErr = 'Резрешается загружать файлы формата аудио видео и картинки \n Максимальный объем загружаемого файла 700 MB (734003200 Byte)';
+    popup.showPopup('err', title, msgErr);
   }
 
   // Для записи Аудио/Видео сообщений и загрузки файлов.

@@ -9,7 +9,11 @@ import api from './ApiConnector';
 import pinMsg from './PinMessage';
 import './emoji';
 
-if (document) {
+function load(document) {
+  if (!document) { // Ранний выход
+    return;
+  }
+
   const messagesList = document.getElementById('messages-list'); // список сообщений
   const input = document.getElementById('input'); // input для ввода сообщения
   const btnClip = document.getElementById('clip-btn'); // Кнопка для загрузки файлов.
@@ -74,8 +78,12 @@ if (document) {
 
   // Отправув текстового сообщения
   input.addEventListener('keydown', async (event) => {
-    if (event.code !== 'Enter') return;
-    if (!input.value) return;
+    if (event.code !== 'Enter') {
+      return;
+    }
+    if (!input.value) {
+      return;
+    }
     const msg = await Message.createMessage('text', event.target.value);
     await api.pushMessage(msg);
     messagesList.append(msg.html);
@@ -87,3 +95,5 @@ if (document) {
     clip.openWindowsChangeFile();
   });
 }
+
+load(document);

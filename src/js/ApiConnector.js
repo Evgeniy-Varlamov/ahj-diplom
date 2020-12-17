@@ -20,12 +20,16 @@ class ApiConnector {
     // Запоминаем размер скрола, чтобы после подрузки новой порции сообщений восстановить его позицию
     const beforeScrolHeight = msgListDiv.scrollHeight;
     let URL = this.url;
-    if (id) URL += `?id=${id}`; // Передаем id первого сообщения в списке.
+    if (id) {
+      URL += `?id=${id}`; // Передаем id первого сообщения в списке.
+    }
     const response = await fetch(URL);
     const messagesList = Array.from(await response.json());
     messagesList.forEach((msg) => {
       const message = new Message(msg.type, msg.msg, msg.typeFile, msg.extFile);
-      for (const prop in msg) message[prop] = msg[prop];
+      for (const prop in msg) {
+        message[prop] = msg[prop];
+      }
       message.timeStamp = new Date(message.timeStamp);
       msgListDiv.prepend(message.html);
     });
@@ -78,7 +82,9 @@ class ApiConnector {
     });
     const responseObj = await response.json();
     msg.id = await responseObj.id;
-    if (responseObj.msg) msg.msg = responseObj.msg;
+    if (responseObj.msg) {
+      msg.msg = responseObj.msg;
+    }
   }
 
   async pinnedMessage(id) {
@@ -88,14 +94,16 @@ class ApiConnector {
       method: 'PATCH',
       body: formData,
     });
-    return (await response.json() === 'OK');
+    const result = await response.json();
+    return (result === 'OK');
   }
 
   async unPinnedMessage() {
     const response = await fetch(this.url, {
       method: 'PATCH',
     });
-    return (await response.json() === 'OK');
+    const result = await response.json();
+    return (result === 'OK');
   }
 
   async deleteMessage(id) { // Удаление сообщения
@@ -103,7 +111,8 @@ class ApiConnector {
     const response = await fetch(URL, {
       method: 'DELETE',
     });
-    return (await response.json() === 'OK');
+    const result = await response.json();
+    return (result === 'OK');
   }
 
   // eslint-disable-next-line class-methods-use-this
